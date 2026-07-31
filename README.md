@@ -1,7 +1,7 @@
 # GP-DHP — Gaussian Process Discrete Hawkes Process
 
-Reproduction code for the manuscript *"A Semiparametric Discrete Hawkes Model with a Collapsed
-Gaussian-Process Prior" by T. Brisley, G. Ross and D. Paulin. GP-DHP is a semiparametric collapsed-latent
+Reproduction code for the manuscript "A Semiparametric Discrete Hawkes Model with a Collapsed
+Gaussian-Process Prior" by T. Brisley, G. Ross and D. Paulin available on <https://arxiv.org/abs/2509.21996>. GP-DHP is a semiparametric collapsed-latent
 Gaussian-process discrete-time Hawkes model for self-exciting count data, with MAP estimation,
 forward-validation hyperparameter selection by an analytic bilevel (implicit-function-theorem)
 hypergradient, and a closed-form baseline/excitation projection. **Every GP-DHP fit reported in the
