@@ -1,0 +1,5 @@
+dataset,model,variant,status,val_pll,test_pll,n_dev,n_test,context,hidden,layers,dropout,lr,n_evals,seconds
+crypto,MLP-NB,nocov,ok,-1137.535,-1101.635,730,260,52,80,1,0.1,0.001,144,28.9
+crypto,GRU-NB,nocov,ok,-1138.604,-1106.901,730,260,52,80,1,0.0,0.001,144,195.8
+crypto,LSTM-NB,nocov,ok,-1139.26,-1102.678,730,260,26,20,1,0.1,0.001,144,197.7
+crypto,DeepAR-NB,nocov,ok,-1001.551,-991.904,730,260,26,80,1,0.0,0.001,144,186.1

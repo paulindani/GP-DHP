@@ -1,0 +1,3 @@
+"dataset","split","n","index_start","index_end","date_start","date_end","count_sum","period","D_max"
+"gva_allshootings","development",2922,1,2922,"2014-01-01","2021-12-31",300014,365,100
+"gva_allshootings","test",730,2923,3652,"2022-01-01","2023-12-31",89998,365,100

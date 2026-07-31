@@ -1,0 +1,3 @@
+"dataset","split","n","index_start","index_end","date_start","date_end","count_sum","period","D_max"
+"nyc_shootings","development",6209,1,6209,"2006-01-01","2022-12-31",21422,365,100
+"nyc_shootings","test",1096,6210,7305,"2023-01-01","2025-12-31",2566,365,100
