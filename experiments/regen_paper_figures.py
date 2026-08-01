@@ -7,8 +7,9 @@ paper's predictive, calibration, and excitation tables -- rebuilds each design,
 projects the fitted kernel / components, and writes:
   figure_kernel_small_multiples.pdf        - NB kernel / GP correction / total f(d) over lags,
                                              7 panels (the 5 series; nyc & gva shown with AND without cov.)
-  figure_baseline_rates.pdf                - fitted baseline rate softplus(b(t)) over time, 7 panels
-                                             (same 7 GP-DHP fits), train/test split marked
+  figure_baseline_rates.pdf                - fitted baseline rate softplus(b(t)) over the final year
+                                             (one seasonal period) of each record, 7 panels
+                                             (same 7 GP-DHP fits); the window lies in the test span
   figure_nyc_component_decomposition.pdf   - NYC held-out counts + latent component decomposition
   figureS1_predictive_intervals_final.pdf  - observed + pred mean + 80%/95% NB bands, 5 panels
 Each reconstructed fit is verified in place: the recomputed held-out log-likelihood and positive
@@ -142,16 +143,20 @@ axes[0].legend(frameon=False, fontsize=9)
 fig.align_ylabels(axes)           # lock every "response" caption to a common x per column
 fig.savefig(os.path.join(OUT, "figure_kernel_small_multiples.pdf"), bbox_inches="tight", pad_inches=0.02); plt.close(fig)
 
-# Figure: fitted baseline rates softplus(b(t)) over time (row 1: 2 weekly series; rows 2-6: 5 full-width daily series)
+# Figure: fitted baseline rates softplus(b(t)) over the final year -- one seasonal period -- of each
+# series (row 1: 2 weekly series; rows 2-6: 5 full-width daily series)
 fig, axes = _axes_baseline((13, 10.5))
 for ax, (ds, v, title) in zip(axes, PANELS7):
     d = F[(ds, v)]; dates = d["dates"]; r = d["base_rate"]; T = d["T"]
-    ax.plot(dates, r, color="navy", lw=0.4)
-    ax.axvline(dates[T], color="0.55", ls=":", lw=1.0)                 # train | test split
+    W = 365 if d["daily"] else 52                                      # one period: final year of the record
+    ax.plot(dates[-W:], r[-W:], color="navy", lw=0.8)
+    if dates[T] >= dates[-W]:
+        ax.axvline(dates[T], color="0.55", ls=":", lw=1.0)             # train | test split, if in window
     ax.set_title(title, fontsize=10)
     ax.set_ylabel("baseline rate (counts/" + ("day" if d["daily"] else "week") + ")", fontsize=9)
-    ax.xaxis.set_major_locator(mdates.AutoDateLocator(maxticks=6))
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    loc = mdates.AutoDateLocator(maxticks=7)
+    ax.xaxis.set_major_locator(loc)
+    ax.xaxis.set_major_formatter(mdates.ConciseDateFormatter(loc))
 # lock all "baseline rate (...)" captions to a common x so the five full-width panels align exactly
 fig.align_ylabels(axes)
 fig.savefig(os.path.join(OUT, "figure_baseline_rates.pdf"), bbox_inches="tight", pad_inches=0.02); plt.close(fig)
